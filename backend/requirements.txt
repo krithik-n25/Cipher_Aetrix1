@@ -1,0 +1,11 @@
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+python-dotenv>=1.0.1
+pyjwt>=2.8.0
+bcrypt>=4.1.2
+pydantic>=2.7.1
+httpx==0.24.1
+twilio==8.13.0
+groq==0.4.2
+deep-translator
+langdetect
