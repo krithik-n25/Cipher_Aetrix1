@@ -144,7 +144,7 @@ Nearest facility (GPS) + Self-care steps + Warning signs
 ## 🏗️ System Architecture
 
 <div align="center">
-  <img src="./assets/image.png" alt="System Architecture Diagram" width="800" />
+  <img src="src/assets/image.png" alt="System Architecture Diagram" width="800" />
 </div>
 
 ```
