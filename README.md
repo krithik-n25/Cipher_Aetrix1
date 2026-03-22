@@ -144,7 +144,7 @@ Nearest facility (GPS) + Self-care steps + Warning signs
 ## 🏗️ System Architecture
 
 <div align="center">
-  <img src="src/assets/image.png" alt="System Architecture Diagram" width="800" />
+  <img src="MargDarshak/src/assets/image.png" alt="System Architecture Diagram" width="800" />
 </div>
 
 ```
@@ -208,7 +208,139 @@ Nearest facility (GPS) + Self-care steps + Warning signs
 │  Result: Zero hallucination risk on clinical decisions  │
 └─────────────────────────────────────────────────────────┘
 ```
+## 📁 Project Structure
 
+```
+margdarshak/
+├── .gitignore
+├── README.md
+├── AETRIX_2026_MargDarshak_Report.md
+├── AETRIX_2026_MargDarshak_PPT.md
+├── AETRIX_2026_PPT_Content.md
+├── AETRIX_2026_Project_Report.md
+├── MargDarshak_WhatsApp_PRD.md
+│
+├── backend/                          # FastAPI Python backend
+│   ├── main.py                       # App entry point, CORS, route registration
+│   ├── requirements.txt              # Python dependencies
+│   ├── test_engine.py                # Unit tests for triage rule engine
+│   ├── margdarshak.db                # SQLite database (WAL mode)
+│   ├── .env                          # API keys & config (not committed)
+│   ├── start.bat                     # Windows quick-start script
+│   ├── start.sh                      # Linux/Mac quick-start script
+│   │
+│   ├── auth/
+│   │   ├── __init__.py
+│   │   └── dependencies.py           # JWT decode, get_current_user, role guards
+│   │
+│   ├── database/
+│   │   ├── __init__.py
+│   │   ├── db.py                     # SQLite connection, init_db(), table creation
+│   │   └── seed.py                   # Demo users, facilities, sample assessments
+│   │
+│   ├── engine/
+│   │   ├── __init__.py
+│   │   ├── rule_engine.py            # Deterministic triage logic (RED/YELLOW/GREEN)
+│   │   └── symptom_keywords.py       # Keyword lists for 12 RED + 40+ YELLOW rules
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── schemas.py                # Pydantic v2 request/response models
+│   │
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── auth.py                   # POST /auth/login, /auth/register, GET /auth/me
+│   │   ├── triage.py                 # POST /triage/assess, GET /triage/history
+│   │   ├── patients.py               # GET /patients/by-asha, /patients/follow-ups
+│   │   ├── facilities.py             # GET /facilities/nearby (GPS-based)
+│   │   ├── feedback.py               # POST /feedback (outcome reporting)
+│   │   ├── admin.py                  # GET /admin/summary, /admin/outbreaks
+│   │   └── whatsapp.py               # POST /whatsapp/webhook (Twilio inbound)
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── groq_ai.py                # Groq LLaMA 3.1 8B — WhatsApp triage + translation
+│   │   ├── response_builder.py       # Formats triage result into structured response
+│   │   └── translator.py             # Language detection + translation helpers
+│   │
+│   └── utils/
+│       ├── __init__.py
+│       └── haversine.py              # GPS distance calculation (km)
+│
+└── MargDarshak/                      # React 18 + Vite frontend
+    ├── index.html
+    ├── vite.config.js
+    ├── package.json
+    ├── eslint.config.js
+    ├── .env                          # VITE_API_URL, VITE_GEMINI_API_KEY, etc.
+    ├── .gitignore
+    │
+    ├── public/
+    │   ├── favicon.svg
+    │   └── icons.svg
+    │
+    └── src/
+        ├── App.jsx                   # Root component, React Router setup
+        ├── App.css
+        ├── main.jsx                  # ReactDOM entry point
+        ├── index.css                 # Global styles, design tokens
+        │
+        ├── assets/
+        │   └── hero.png              # Landing page hero image
+        │
+        ├── components/               # Reusable UI components
+        │   ├── FacilityCard.jsx      # Nearby facility card (map, call, directions)
+        │   ├── OutbreakBadge.jsx     # Severity badge for outbreak alerts
+        │   ├── ProgressBar.jsx       # Step progress indicator
+        │   ├── ProtectedRoute.jsx    # JWT + role-based route guard
+        │   ├── SkeletonCard.jsx      # Loading skeleton placeholder
+        │   ├── Toast.jsx             # Notification toast component
+        │   ├── TriageResultCard.jsx  # RED/YELLOW/GREEN result display
+        │   └── VoiceInput.jsx        # Web Speech API voice recorder
+        │
+        ├── context/                  # React Context providers
+        │   ├── AssessmentContext.jsx  # Multi-step assessment state
+        │   ├── AuthContext.jsx        # JWT auth state, login/logout
+        │   └── LanguageContext.jsx    # Selected language (5 supported)
+        │
+        ├── pages/
+        │   ├── Login.jsx             # Unified login (user/asha/admin)
+        │   │
+        │   ├── user/                 # Patient self-assessment flow
+        │   │   ├── LanguageSelect.jsx # Step 1 — choose language
+        │   │   ├── PatientInfo.jsx    # Step 2 — age, gender, location
+        │   │   ├── SymptomInput.jsx   # Step 3 — voice/text symptom entry
+        │   │   ├── TriageResult.jsx   # Step 4 — result + nearby facilities
+        │   │   └── FeedbackLoop.jsx   # Step 5 — outcome feedback
+        │   │
+        │   ├── asha/                 # ASHA worker portal
+        │   │   ├── AshaDashboard.jsx  # Stats: today's assessments, emergencies
+        │   │   ├── AssessPatient.jsx  # Assess a patient on their behalf
+        │   │   ├── FollowUp.jsx       # Overdue follow-up tracker
+        │   │   ├── MonthlyReport.jsx  # PDF report generation
+        │   │   └── PatientList.jsx    # All assigned patients
+        │   │
+        │   └── admin/                # District admin dashboard
+        │       ├── AdminDashboard.jsx # KPIs, triage distribution charts
+        │       ├── AdminLayout.jsx    # Sidebar navigation wrapper
+        │       ├── AshaTracker.jsx    # ASHA activity monitoring
+        │       ├── OutbreakAlerts.jsx # Automated outbreak detection + response
+        │       ├── PHCMonitor.jsx     # PHC load and capacity tracking
+        │       ├── Reports.jsx        # District-level reports
+        │       └── SymptomHeatmap.jsx # Block-level symptom heatmap
+        │
+        └── utils/
+            ├── api.js                # Axios instance, auth headers, base URL
+            ├── gemini.js             # Google Gemini API — conversational intake
+            ├── generatePDF.js        # jsPDF + html2canvas PDF export
+            ├── haversine.js          # Client-side GPS distance calc
+            ├── nearbyFacilities.js   # Overpass API facility discovery
+            ├── translate.js          # Sarvam AI TTS integration
+            └── translation.js        # UI string translations (5 languages)
+```
+
+---
+```
 **Triage Decision Tree (simplified):**
 
 ```
