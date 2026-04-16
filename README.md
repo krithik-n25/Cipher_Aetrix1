@@ -285,46 +285,44 @@ margdarshak/
 ```
 **Triage Decision Tree (simplified):**
 
-```
-mermaid
+```mermaid
 flowchart TD
 A([Symptoms detected]) --> B{Danger word present?}
-    B -->|unconscious, seizure, chest pain...| RED1[🔴 RED]
-    B -->|No| C{has_danger_signs = True?}
-    C -->|Yes| RED2[🔴 RED]
-    C -->|No| D{Fever in baby < 3 months?}
-    D -->|Yes| RED3[🔴 RED]
-    D -->|No| E{RED combination matched?}
-    E -->|12 rules| RED4[🔴 RED]
-    E -->|No| F{Severity = severe + concerning symptom?}
-    F -->|Yes| RED5[🔴 RED]
-    F -->|No| G{3+ YELLOW symptoms simultaneously?}
-    G -->|Yes| RED6[🔴 RED]
-    G -->|No| H{YELLOW symptom matched?}
-    H -->|Single flag 40+ or combo 22 rules| YEL1[🟡 YELLOW]
-    H -->|No| I{Severity = moderate?}
-    I -->|Yes| YEL2[🟡 YELLOW]
-    I -->|No| J{Duration ≥ 4 days?}
-    J -->|Yes| YEL3[🟡 YELLOW]
-    J -->|No| K{Pregnancy + any symptom?}
-    K -->|Yes| YEL4[🟡 YELLOW]
-    K -->|No| L{Worsening rapidly or no symptoms?}
-    L -->|Yes| YEL5[🟡 YELLOW]
-    L -->|No| GREEN[🟢 GREEN]
-
- style RED1 fill:#ef4444,color:#fff,stroke:#dc2626
-    style RED2 fill:#ef4444,color:#fff,stroke:#dc2626
-    style RED3 fill:#ef4444,color:#fff,stroke:#dc2626
-    style RED4 fill:#ef4444,color:#fff,stroke:#dc2626
-    style RED5 fill:#ef4444,color:#fff,stroke:#dc2626
-    style RED6 fill:#ef4444,color:#fff,stroke:#dc2626
-    style YEL1 fill:#f59e0b,color:#fff,stroke:#d97706
-    style YEL2 fill:#f59e0b,color:#fff,stroke:#d97706
-    style YEL3 fill:#f59e0b,color:#fff,stroke:#d97706
-    style YEL4 fill:#f59e0b,color:#fff,stroke:#d97706
-    style YEL5 fill:#f59e0b,color:#fff,stroke:#d97706
-    style GREEN fill:#22c55e,color:#fff,stroke:#16a34a
-    style A fill:#6366f1,color:#fff,stroke:#4f46e5
+B -->|unconscious, seizure, chest pain...| RED1[🔴 RED]
+B -->|No| C{has_danger_signs = True?}
+C -->|Yes| RED2[🔴 RED]
+C -->|No| D{Fever in baby < 3 months?}
+D -->|Yes| RED3[🔴 RED]
+D -->|No| E{RED combination matched?}
+E -->|12 rules| RED4[🔴 RED]
+E -->|No| F{Severity = severe + concerning symptom?}
+F -->|Yes| RED5[🔴 RED]
+F -->|No| G{3+ YELLOW symptoms simultaneously?}
+G -->|Yes| RED6[🔴 RED]
+G -->|No| H{YELLOW symptom matched?}
+H -->|Single flag 40+ or combo 22 rules| YEL1[🟡 YELLOW]
+H -->|No| I{Severity = moderate?}
+I -->|Yes| YEL2[🟡 YELLOW]
+I -->|No| J{Duration >= 4 days?}
+J -->|Yes| YEL3[🟡 YELLOW]
+J -->|No| K{Pregnancy + any symptom?}
+K -->|Yes| YEL4[🟡 YELLOW]
+K -->|No| L{Worsening rapidly or no symptoms?}
+L -->|Yes| YEL5[🟡 YELLOW]
+L -->|No| GREEN[🟢 GREEN]
+style RED1 fill:#ef4444,color:#fff,stroke:#dc2626
+style RED2 fill:#ef4444,color:#fff,stroke:#dc2626
+style RED3 fill:#ef4444,color:#fff,stroke:#dc2626
+style RED4 fill:#ef4444,color:#fff,stroke:#dc2626
+style RED5 fill:#ef4444,color:#fff,stroke:#dc2626
+style RED6 fill:#ef4444,color:#fff,stroke:#dc2626
+style YEL1 fill:#f59e0b,color:#fff,stroke:#d97706
+style YEL2 fill:#f59e0b,color:#fff,stroke:#d97706
+style YEL3 fill:#f59e0b,color:#fff,stroke:#d97706
+style YEL4 fill:#f59e0b,color:#fff,stroke:#d97706
+style YEL5 fill:#f59e0b,color:#fff,stroke:#d97706
+style GREEN fill:#22c55e,color:#fff,stroke:#16a34a
+style A fill:#6366f1,color:#fff,stroke:#4f46e5
 ```
 
 ---
