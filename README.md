@@ -285,7 +285,8 @@ margdarshak/
 ```
 **Triage Decision Tree (simplified):**
 
-```mermaid
+```
+mermaid
 flowchart TD
 A([Symptoms detected]) --> B{Danger word present?}
 B -->|unconscious, seizure, chest pain...| RED1[🔴 RED]
@@ -325,7 +326,7 @@ L -->|No| GREEN[🟢 GREEN]
     style GREEN fill:#22c55e,color:#fff,stroke:#16a34a
     style A fill:#6366f1,color:#fff,stroke:#4f46e5
 ```
-```
+
 ---
 
 ## 📱 WhatsApp Integration Flow
