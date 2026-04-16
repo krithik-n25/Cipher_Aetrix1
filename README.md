@@ -147,6 +147,9 @@ Nearest facility (GPS) + Self-care steps + Warning signs
   <img src="MargDarshak/src/assets/image.png" alt="System Architecture Diagram" width="800" />
 </div>
 
+
+
+
 ```
 ## 📁 Project Structure
 
