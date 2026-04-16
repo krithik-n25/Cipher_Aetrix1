@@ -150,7 +150,6 @@ Nearest facility (GPS) + Self-care steps + Warning signs
 
 
 
-```
 ## 📁 Project Structure
 
 ```
