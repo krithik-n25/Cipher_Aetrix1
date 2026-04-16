@@ -148,66 +148,6 @@ Nearest facility (GPS) + Self-care steps + Warning signs
 </div>
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         USER INTERFACES                             │
-│                                                                     │
-│   ┌──────────────────┐  ┌──────────────────┐  ┌─────────────────┐  │
-│   │   Web App        │  │   ASHA Portal    │  │ Admin Dashboard │  │
-│   │  (Patient Flow)  │  │  (ASHA Flow)     │  │  (Admin Flow)   │  │
-│   │  React 18 + Vite │  │  React 18 + Vite │  │  + Recharts     │  │
-│   └────────┬─────────┘  └────────┬─────────┘  └───────┬─────────┘  │
-│            └────────────────────┼────────────────────┘             │
-│                                 │  REST API (JSON + JWT)            │
-│                    ┌────────────▼────────────┐                      │
-│                    │      FastAPI Backend     │                      │
-│                    │  /auth   /triage         │                      │
-│                    │  /patients  /admin       │                      │
-│                    │  /facilities /feedback   │                      │
-│                    │  /whatsapp  (Twilio)     │                      │
-│                    └────────────┬────────────┘                      │
-│         ┌──────────┬────────────┼────────────┬──────────┐           │
-│         │          │            │            │          │           │
-│  ┌──────▼───┐ ┌────▼──────┐ ┌──▼──────┐ ┌───▼────┐ ┌───▼──────┐   │
-│  │ SQLite   │ │   Rule    │ │ Gemini  │ │  Groq  │ │ Twilio   │   │
-│  │   DB     │ │  Engine   │ │  AI     │ │ LLaMA  │ │WhatsApp  │   │
-│  │ 6 tables │ │ 12 RED    │ │  Chat   │ │ 3.1 8B │ │ Sandbox  │   │
-│  │ WAL mode │ │ 40+ YELLOW│ │  Intake │ │ <2s    │ │ TwiML    │   │
-│  └──────────┘ └───────────┘ └─────────┘ └────────┘ └──────────┘   │
-│                                                                     │
-│  ┌────────────┐  ┌──────────────┐  ┌──────────────────────────┐    │
-│  │ Sarvam AI  │  │ Overpass API │  │  Google Maps Embed API   │    │
-│  │ TTS Voice  │  │ GPS Facility │  │  Map + Directions        │    │
-│  │ 5 languages│  │ Discovery    │  │  Direct Call Button      │    │
-│  └────────────┘  └──────────────┘  └──────────────────────────┘    │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🧠 The Triage Engine — Safety-Critical Design
-
-> ⚠️ *Pure LLM triage is unsafe. We separated the AI from the clinical decision entirely.*
-
-```
-┌─────────────────────────────────────────────────────────┐
-│              TWO-LAYER SAFETY ARCHITECTURE              │
-│                                                         │
-│  Layer 1 — Gemini AI (Conversation Only)                │
-│  ├── Warm, natural 5-turn conversation                  │
-│  ├── Extracts: symptoms, duration, severity, age group  │
-│  └── NEVER makes the triage decision                    │
-│                                                         │
-│  Layer 2 — Deterministic Rule Engine (Decision Only)    │
-│  ├── 12 RED emergency rules (heart attack, stroke...)   │
-│  ├── 40+ YELLOW single-symptom flags                    │
-│  ├── 22 YELLOW combination rules                        │
-│  ├── Override: 3+ YELLOW symptoms → auto RED            │
-│  ├── Override: infant under 3 months → minimum YELLOW  │
-│  └── Hard rule: NEVER default to GREEN                  │
-│                                                         │
-│  Result: Zero hallucination risk on clinical decisions  │
-└─────────────────────────────────────────────────────────┘
-```
 ## 📁 Project Structure
 
 ```
