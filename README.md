@@ -312,7 +312,7 @@ A([Symptoms detected]) --> B{Danger word present?}
     L -->|Yes| YEL5[🟡 YELLOW]
     L -->|No| GREEN[🟢 GREEN]
 
-    style RED1 fill:#ef4444,color:#fff,stroke:#dc2626
+ style RED1 fill:#ef4444,color:#fff,stroke:#dc2626
     style RED2 fill:#ef4444,color:#fff,stroke:#dc2626
     style RED3 fill:#ef4444,color:#fff,stroke:#dc2626
     style RED4 fill:#ef4444,color:#fff,stroke:#dc2626
