@@ -285,23 +285,45 @@ margdarshak/
 ```
 **Triage Decision Tree (simplified):**
 
-```
-Symptoms Detected
-      │
-      ├── Danger word present? (unconscious, seizure, chest pain...) ──→ 🔴 RED
-      ├── has_danger_signs = True? ──────────────────────────────────→ 🔴 RED
-      ├── Fever in baby < 3 months? ──────────────────────────────────→ 🔴 RED
-      ├── RED combination matched? (12 rules) ────────────────────────→ 🔴 RED
-      ├── Severity = severe + concerning symptom? ────────────────────→ 🔴 RED
-      ├── 3+ YELLOW symptoms simultaneously? ─────────────────────────→ 🔴 RED
-      ├── YELLOW single symptom matched? (40+ flags) ─────────────────→ 🟡 YELLOW
-      ├── YELLOW combination matched? (22 rules) ─────────────────────→ 🟡 YELLOW
-      ├── Severity = moderate? ────────────────────────────────────────→ 🟡 YELLOW
-      ├── Duration ≥ 4 days? ───────────────────────────────────────→ 🟡 YELLOW
-      ├── Pregnancy + any symptom? ───────────────────────────────────→ 🟡 YELLOW
-      ├── Worsening rapidly? ──────────────────────────────────────────→ 🟡 YELLOW
-      ├── No symptoms detected? ──────────────────────────────────────→ 🟡 YELLOW
-      └── Mild + short duration + no danger ───────────────────────────→ 🟢 GREEN
+```mermaid
+flowchart TD
+    A([Symptoms detected]) --> B{Danger word present?}
+    B -->|unconscious, seizure, chest pain...| RED1[🔴 RED]
+    B -->|No| C{has_danger_signs = True?}
+    C -->|Yes| RED2[🔴 RED]
+    C -->|No| D{Fever in baby < 3 months?}
+    D -->|Yes| RED3[🔴 RED]
+    D -->|No| E{RED combination matched?}
+    E -->|12 rules| RED4[🔴 RED]
+    E -->|No| F{Severity = severe + concerning symptom?}
+    F -->|Yes| RED5[🔴 RED]
+    F -->|No| G{3+ YELLOW symptoms simultaneously?}
+    G -->|Yes| RED6[🔴 RED]
+    G -->|No| H{YELLOW symptom matched?}
+    H -->|Single flag 40+ or combo 22 rules| YEL1[🟡 YELLOW]
+    H -->|No| I{Severity = moderate?}
+    I -->|Yes| YEL2[🟡 YELLOW]
+    I -->|No| J{Duration ≥ 4 days?}
+    J -->|Yes| YEL3[🟡 YELLOW]
+    J -->|No| K{Pregnancy + any symptom?}
+    K -->|Yes| YEL4[🟡 YELLOW]
+    K -->|No| L{Worsening rapidly or no symptoms?}
+    L -->|Yes| YEL5[🟡 YELLOW]
+    L -->|No| GREEN[🟢 GREEN]
+
+    style RED1 fill:#ef4444,color:#fff,stroke:#dc2626
+    style RED2 fill:#ef4444,color:#fff,stroke:#dc2626
+    style RED3 fill:#ef4444,color:#fff,stroke:#dc2626
+    style RED4 fill:#ef4444,color:#fff,stroke:#dc2626
+    style RED5 fill:#ef4444,color:#fff,stroke:#dc2626
+    style RED6 fill:#ef4444,color:#fff,stroke:#dc2626
+    style YEL1 fill:#f59e0b,color:#fff,stroke:#d97706
+    style YEL2 fill:#f59e0b,color:#fff,stroke:#d97706
+    style YEL3 fill:#f59e0b,color:#fff,stroke:#d97706
+    style YEL4 fill:#f59e0b,color:#fff,stroke:#d97706
+    style YEL5 fill:#f59e0b,color:#fff,stroke:#d97706
+    style GREEN fill:#22c55e,color:#fff,stroke:#16a34a
+    style A fill:#6366f1,color:#fff,stroke:#4f46e5
 ```
 
 ---
@@ -555,40 +577,6 @@ VITE_SARVAM_API_KEY=your-sarvam-key
 
 ---
 
-## 🗺️ Roadmap
-
-### ✅ Phase 1 — Hackathon Build (Complete)
-```
-✅ Conversational AI symptom intake (Gemini, 5 languages)
-✅ Deterministic triage engine (12 RED rules, 40+ YELLOW flags)
-✅ Voice input + Sarvam TTS output
-✅ GPS-based facility finder (Overpass API + Google Maps)
-✅ ASHA worker portal (patient management + follow-ups)
-✅ Admin dashboard (outbreak alerts + heatmaps + PHC monitor)
-✅ WhatsApp bot (Twilio + Groq)
-✅ JWT auth + role-based access (user/asha/admin)
-✅ PDF monthly report generation
-✅ 48-hour follow-up reminder system
-```
-
-### 🔄 Phase 2 — Production Ready (Month 1–3)
-```
-🔄 Offline-first PWA (Service Workers) for zero-connectivity areas
-🔄 Automated WhatsApp follow-up at 24h + 48h post-assessment
-🔄 PostgreSQL migration (SQLite → PostgreSQL, one line change)
-🔄 Redis for WhatsApp session state (replace in-memory dict)
-🔄 Docker containerization + CI/CD pipeline
-```
-
-### 💡 Phase 3 — Scale (Month 3–12)
-```
-💡 HMIS API integration — direct government case reporting
-💡 Ayushman Bharat beneficiary verification via NHA API
-💡 IDSP integration — state disease surveillance
-💡 NHM state-level rollout via ASHA training infrastructure
-💡 Voice-only mode — complete flow for fully illiterate users
-💡 ASHA incentive tracking + NHM payment integration
-```
 
 ---
 
@@ -610,14 +598,6 @@ VITE_SARVAM_API_KEY=your-sarvam-key
 
 ---
 
-## 👥 Team
-
-| Member | Role | Built |
-|--------|------|-------|
-| [Member 1] | Full-Stack Developer | FastAPI backend, JWT auth, SQLite schema, seed data |
-| [Member 2] | AI / ML Engineer | Triage rule engine, Gemini integration, symptom extraction, unit tests |
-| [Member 3] | UI/UX + Frontend | All 18 React screens, design system, Sarvam TTS, voice input, GPS finder |
-| [Member 4] | Backend + Integrations | WhatsApp/Twilio, Groq translation, admin outbreak detection, PDF reports |
 
 ---
 
@@ -656,9 +636,5 @@ VITE_SARVAM_API_KEY=your-sarvam-key
 
 ---
 
-![GitHub stars](https://img.shields.io/github/stars/your-username/margdarshak?style=social)
-![GitHub forks](https://img.shields.io/github/forks/your-username/margdarshak?style=social)
-
-Made with ❤️ for rural India · AETRIX 2026
 
 </div>
