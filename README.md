@@ -282,11 +282,10 @@ margdarshak/
 ```
 
 ---
-```
+
 **Triage Decision Tree (simplified):**
 
-```
-mermaid
+```mermaid
 flowchart TD
 A([Symptoms detected]) --> B{Danger word present?}
 B -->|unconscious, seizure, chest pain...| RED1[🔴 RED]
